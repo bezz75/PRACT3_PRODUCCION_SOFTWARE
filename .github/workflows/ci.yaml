@@ -52,4 +52,4 @@ jobs:
 
     - name: Ejecutar tests de BDD
       run: |
-        uv run behave core/tests/behaviour/
+        uv run pytest core/tests/behaviour/ -v
