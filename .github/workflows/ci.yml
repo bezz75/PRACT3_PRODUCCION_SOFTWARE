@@ -1,31 +1,55 @@
-name: CI
+name: CI - Pruebas y Validación de Código
 
 on:
   push:
-    branches: ["**"]
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
 
 jobs:
-  lint-and-test:
+  test:
     runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        python-version: ['3.11']
+
     steps:
-      - uses: actions/checkout@v4
+    - name: Checkout código
+      uses: actions/checkout@v3
 
-      - name: Set up Python
+    - name: Instalar uv
+      uses: astral-sh/setup-uv@v2
 
-      - name: Install uv
+    - name: Configurar Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
 
-      - name: Install dependencies
+    - name: Instalar dependencias con uv
+      run: |
+        uv sync
 
-      - name: Install ruff and mypy
+    - name: Comprobar errores en el código (lint con ruff)
+      run: |
+        uv run ruff check .
 
-      - name: Ruff format
+    - name: Comprobar formato del código (ruff format)
+      run: |
+        uv run ruff format --check .
 
-      - name: Ruff linter
+    - name: Verificar tipos con mypy
+      run: |
+        uv run mypy .
 
-      - name: Mypy
+    - name: Ejecutar tests unitarios
+      run: |
+        uv run pytest core/tests/unit/ -v
 
-      - name: Unit tests
+    - name: Ejecutar tests de integración
+      run: |
+        uv run pytest core/tests/integration/ -v
 
-      - name: Integration tests
-
-      - name: BDD tests
+    - name: Ejecutar tests de BDD
+      run: |
+        uv run pytest core/tests/behaviour/ -v
