@@ -48,7 +48,7 @@ Feature: Gestión de gastos
     And elimino el gasto con id 1
     Then el total de dinero gastado debe ser 60 euros
 
-  Scenario: Crear cuatro gastos y eliminar dos de ellos la suma es correcta
+  Scenario: Crear cuatro gastos de 20, 15, 25, 40 y eliminar dos de ellos la suma es correcta
     Given un gestor de gastos vacío
     When añado un gasto de 20 euros llamado Transporte
     And añado un gasto de 15 euros llamado Snack
@@ -58,7 +58,7 @@ Feature: Gestión de gastos
     And elimino el gasto con id 4
     Then el total de dinero gastado debe ser 45 euros
 
-  Scenario: Crear cinco gastos de igual cantidad y verificar el total
+  Scenario: Crear cinco gastos de iguales de cantidad 8 y verificar que la suma es 40
     Given un gestor de gastos vacío
     When añado un gasto de 8 euros llamado Gasto1
     And añado un gasto de 8 euros llamado Gasto2
@@ -67,7 +67,7 @@ Feature: Gestión de gastos
     And añado un gasto de 8 euros llamado Gasto5
     Then el total de dinero gastado debe ser 40 euros
 
-  Scenario: Crear dos gastos, eliminar uno y crear otro
+  Scenario: Crear dos gastos de 50 y 30, eliminar el de 50 y crear otro de 20, el resultado debe ser 50
     Given un gestor de gastos vacío
     When añado un gasto de 50 euros llamado Vacaciones
     And añado un gasto de 30 euros llamado Hotel
